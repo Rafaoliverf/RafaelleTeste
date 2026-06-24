@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Portfólio Profissional | Rafaelle Freitas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* PALETA DE CORES DEEP SPACE */
+        :root {
+            --ink-black: #0D1321;
+            --deep-space: #1D2D44;
+            --blue-slate: #3E5C76;
+            --dusty-denim: #748CAB;
+            --eggshell: #F0EBD8;
+            --card-bg: #0d1321;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--ink-black);
+            color: var(--eggshell);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ANIMAÇÃO DE REVELAÇÃO NO SCROLL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+nav {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;            
+    padding: 0 10%;            /* Removido o padding top/bottom para não somar com a height */
+    background: rgba(13, 19, 33, 0.95);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;                    /* Garante que ela comece no topo */
+    left: 0;
+    width: 100%;
+    height: 70px;              /* Altura fixa controlada */
+    z-index: 1000;
+    border-bottom: 1px solid var(--deep-space);
+}
+
+.exclude-svg {
+    height: 45px;              /* Um pouco menor para ficar mais elegante */
+    width: auto;               /* Força a largura a seguir a altura proporcionalmente */
+    max-height: 100%;          /* Impede que ela cresça mais que a nav */
+    display: block;
+    object-fit: contain;       /* Garante que o conteúdo do SVG se ajuste ao box */
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;       /* Alinha os links verticalmente com a logo */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--dusty-denim);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    white-space: nowrap;       /* Impede que o texto quebre linha */
+}
+
+nav ul li a:hover { 
+    color: var(--eggshell); 
+    text-shadow: 0 0 10px rgba(240, 235, 216, 0.3); 
+}
+
+        /* HEADER / PROFILE SECTION (O que substitui a barra antiga) */
+        .profile-container {
+            padding: 150px 10% 60px;
+            display: flex;
+            justify-content: center;
+            background: radial-gradient(circle at top, var(--deep-space) 0%, var(--ink-black) 100%);
+        }
+
+        .profile-card {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            max-width: 1050px;
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border: 1px solid #1d2d44; 
+            animation: fadeIn 1s ease-out;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            --border: 4px solid var(--blue-slate);
+            box-shadow: 0 0 20px #f0ebd8;
+        }
+
+        .profile-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .profile-info p {
+            font-size: 1.05rem;
+            color: var(--dusty-denim);
+            margin-bottom: 25px;
+        }
+
+        /* Botões de Redes Sociais no Card */
+        .social-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #21262d;
+            color: var(--eggshell);
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+            border: 1px solid #30363d;
+        }
+
+        .social-btn:hover {
+            background: var(--blue-slate);
+            border-color: var(--dusty-denim);
+            transform: translateY(-3px);
+        }
+
+        /* SEÇÕES GERAIS */
+        section { padding: 80px 10%; }
+        h2 { 
+            font-size: 2.2rem; 
+            margin-bottom: 3rem; 
+            text-align: center;
+            color: var(--dusty-denim);
+        }
+
+        /* GRID DE HABILIDADES (Cards com Brilho) */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--deep-space);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: var(--dusty-denim);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            background: #243b55;
+        }
+
+        .skill-card i { font-size: 3rem; color: var(--dusty-denim); margin-bottom: 1.5rem; }
+
+        /* PROJETOS (Estilo Timeline/Lista) */
+        .project-item {
+            background: linear-gradient(145deg, #0d1321, #161b22);
+            border-left: 4px solid var(--blue-slate);
+            padding: 2rem;
+            border-radius: 0 15px 15px 0;
+            margin-bottom: 1.5rem;
+            transition: 0.4s;
+        }
+
+        .project-item:hover {
+            border-left-color: var(--eggshell);
+            padding-left: 3rem;
+            background: #1c2533;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 4rem 10%;
+            background: #05080f;
+            text-align: center;
+            border-top: 1px solid var(--deep-space);
+        }
+
+        /* ANIMAÇÕES */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 850px) {
+            .profile-card { flex-direction: column; text-align: center; }
+            .social-grid { justify-content: center; }
+            nav ul { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <img src="C:/Users/RafaelleFreitas/Downloads/Exclude.svg" alt="Logo" class="exclude-svg">
+    <ul>
+        <li><a href="#home">Início</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projetos</a></li>
+        <li><a href="#contact">Contato</a></li>
+    </ul>
+</nav>
+
+    <header class="profile-container" id="home">
+        <div class="profile-card">
+            <img src="C:/Users/RafaelleFreitas/Downloads/ChatGPT Image 10 de mar. de 2026, 14_44_05.png" alt="Rafaelle Freitas" class="profile-img">
+            
+            <div class="profile-info">
+                <h1>Rafaelle Freitas</h1>
+                <p>
+                    Desenvolvedora focada em inteligência de dados e automação. Desde 2022, transformo fluxos complexos em soluções ágeis usando Python e SQL. Especialista em migração de sistemas legados e criação de workflows automatizados que geram valor real para o negócio.
+                </p>
+
+                <div class="social-grid">
+                    <a href="mailto:seuemail@exemplo.com" class="social-btn">
+                        <i class="fas fa-envelope"></i> E-mail
+                    </a>
+                    <a href="https://wa.me/37998248981" class="social-btn">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="https://github.com/Rafaoliverf" class="social-btn">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/Rafaoliverf" class="social-btn">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="skills">
+        <h2 class="reveal">Minhas Especialidades</h2>
+        <div class="skills-grid">
+            <div class="skill-card reveal">
+                <i class="fas fa-database"></i>
+                <h3>Banco de Dados</h3>
+                <p>Especialista em SQL Server, PostgreSQL e recuperação de dados legados.</p>
+            </div>
+            <div class="skill-card reveal">
+                <i class="fab fa-python"></i>
+                <h3>Python & ETL</h3>
+                <p>Scripts inteligentes para tratamento de dados e automação de processos.</p>
+            </div>
+            <div class="skill-card reveal">
+                <i class="fas fa-robot"></i>
+                <h3>Automação n8n</h3>
+                <p>Conectando ferramentas e APIs para criar fluxos de trabalho sem falhas.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="reveal">Projetos em Destaque</h2>
+        <div class="project-item reveal">
+            <h3>Migração Legacy-to-Cloud</h3>
+            <p>Arquitetura de dados para migrar sistemas desktop antigos para nuvem com integridade de 100%.</p>
+        </div>
+        <div class="project-item reveal">
+            <h3>Bot de BI Automatizado</h3>
+            <p>Integração que envia relatórios financeiros dinâmicos para gestores via Telegram em tempo real.</p>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p class="reveal" style="color: var(--dusty-denim);">© 2026 Rafaelle Freitas • Divinópolis, MG</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
